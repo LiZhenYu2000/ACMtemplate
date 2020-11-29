@@ -2,7 +2,7 @@
 #include<new>
 #include<algorithm>
 
-namespace my_vector{
+namespace data_structure{
     constexpr size_t DEAFAULT_CAPACITY = 20;
 
     template<typename T>
