@@ -5,17 +5,18 @@
 namespace data_struct{
     struct node{
         size_t left{0}, right{0}, pos{0};
+        bool tag {false};
         long long sum{0};
         
         node(){}
-        node(size_t l, size_t r, size_t p, long long s);
+        node(size_t l, size_t r, size_t p, bool t, long long s);
     };
     
     template<typename T>
     class segment_tree
     {
     private:
-        std::vector<T> tree{0};
+        std::vector<node> tree{0};
         size_t size{0};
     protected:
         std::stack<node> tmp_tree;
@@ -29,8 +30,8 @@ namespace data_struct{
         // ~segment_tree();
     };
     
-    node::node(size_t l, size_t r, size_t p, long long s)
-    :left{l}, right{r}, pos{p}, sum{s}{}
+    node::node(size_t l, size_t r, size_t p, bool t, long long s)
+    :left{l}, right{r}, pos{p}, tag{t}, sum{s}{}
 
     template<typename T>
     void segment_tree<T>::update_tree(size_t i){
@@ -41,12 +42,12 @@ namespace data_struct{
         while (i)
             if (i%2)
             {
-                tree[i/2] = tree[i] + tree[i + 1];
+                tree[i/2].sum = tree[i].sum + tree[i + 1].sum;
                 i /= 2;
             }
             else
             {
-                tree[(i - 2) / 2] = tree[i] + tree[i - 1];
+                tree[(i - 2) / 2].sum = tree[i].sum + tree[i - 1].sum;
                 i /= 2;
             }
     }
@@ -55,7 +56,7 @@ namespace data_struct{
     void segment_tree<T>::output(){
         for (auto &&i : tree)
         {
-            std::cout << i << ' ';
+            std::cout << i.sum << ' ';
         }
         std::cout << std::endl;
     }
@@ -66,7 +67,7 @@ namespace data_struct{
         size_t right = terms.size() - 1;
         size_t mid;
         
-        tmp_tree.push(node{left, right, 0, -1});
+        tmp_tree.push(node{left, right, 0, false, 0});
         
         while(!tmp_tree.empty()){
             node top = tmp_tree.top();
@@ -74,18 +75,22 @@ namespace data_struct{
             
             if (top.left == top.right)
             {
-                tree[top.pos] = terms[top.left];
+                top.sum = terms[top.left];
+                top.tag = true;
+                tree[top.pos] = top;
                 tmp_tree.pop();
             }
-            else if (tree[2 * top.pos + 1] || tree[2 * top.pos + 2])
-            {
-                tree[top.pos] = tree[2 * top.pos + 1] + tree[2 * top.pos + 2];
+            else if (tree[2 * top.pos + 1].tag || tree[2 * top.pos + 2].tag)
+            { 
+                top.sum = tree[2 * top.pos + 1].sum + tree[2 * top.pos + 2].sum;
+                top.tag = true;
+                tree[top.pos] = top;
                 tmp_tree.pop();
             }
             else
             {
-                tmp_tree.push(node{top.left, mid, 2 * top.pos + 1, -1});
-                tmp_tree.push(node{mid+1, top.right,2 * top.pos + 2, -1}); 
+                tmp_tree.push(node{top.left, mid, 2 * top.pos + 1, false, 0});
+                tmp_tree.push(node{mid+1, top.right, 2 * top.pos + 2, false, 0}); 
             }
         }
     }
@@ -96,11 +101,7 @@ namespace data_struct{
     {
         if (size != 0)
         {
-            tree.resize(2 * size, 0);
-            // for (auto &&i : tree)
-            // {
-            //     std::cout << i << std::endl;
-            // }
+            tree.resize(2 * size, node());
             build_tree(std::vector<T>(terms, terms + s));
         }
     }
@@ -111,11 +112,7 @@ namespace data_struct{
     {
         if (size != 0)
         {
-            tree.resize(2 * size, 0);
-            // for (auto &&i : tree)
-            // {
-            //     std::cout << i << std::endl;
-            // }
+            tree.resize(2 * size, node());
             build_tree(terms);
         }
     }
