@@ -1,8 +1,8 @@
 #include<cstdio>
 #include<cstring>
 namespace math {
-    //朴素筛法求质数
-    int prime[10005] = {0,1};
+    //线性筛法求质数
+    int prime[10005];
     bool Isprime[10005];
     int get_primes(size_t n){
         int cnt=1;
