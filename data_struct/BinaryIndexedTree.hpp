@@ -1,7 +1,8 @@
 #include<vector>
+#include<iostream>
 
 namespace data_struct{
-    constexpr size_t MAX_NUM = 10000;
+    constexpr size_t MAX_NUM = 1e6;
 
     template<typename T>
     class BI_tree{
@@ -35,39 +36,19 @@ namespace data_struct{
             }
             
         }
-        BI_tree():suf(MAX_NUM){}
         BI_tree(const std::vector<T>& num)
         :a_size{num.size()},suf(MAX_NUM){
-            size_t x, y;
-            for (size_t i = 1; i <= a_size; i++)
-            {
-                y = lowbit(i);
-                suf[i] += num[i - 1];
-                x = i - 1;
-                for (size_t j = 1; y >> j; j++)
-                {
-                    suf[i] += suf[x];
-                    x -= lowbit(x);
-                }
+            for(size_t i = 1;i < num.size();i++){
+                add(i, num[i]);
             }
         }
+        BI_tree():suf(MAX_NUM){}
+
         BI_tree(std::vector<T>&& num)
-        :a_size{num.size()},suf(MAX_NUM){
-            size_t x, y;
-            for (size_t i = 1; i <= a_size; i++)
-            {
-                y = lowbit(i);
-                suf[i] += num[i - 1];
-                x = i - 1;
-                for (size_t j = 1; y >> j; j++)
-                {
-                    suf[i] += suf[x];
-                    x -= lowbit(x);
-                }
-            }
-        }
-        BI_tree(T* num, size_t n){
-            BI_tree(std::vector<T>(num, num + n));
-        }
+        :BI_tree(num){}
+
+        BI_tree(T* num, size_t n)
+        :BI_tree(std::vector<T>(num, num + n + 1)){}
+
     };
 }

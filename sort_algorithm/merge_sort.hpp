@@ -1,7 +1,7 @@
 #include <vector>
-#include <iostream>
-// #include <algorithm>
-#include <utility>
+// #include <iostream>
+#include <algorithm>
+// #include <utility>
 
 
 namespace sort_algorithm{
@@ -13,7 +13,7 @@ namespace sort_algorithm{
     template<typename T>
     void merge(std::vector<T>& num, size_t left_begin, size_t right_begin, size_t len){
         size_t left_end = left_begin + len, 
-               right_end = sort_algorithm::min(right_begin + len, num.size());
+               right_end = std::min(right_begin + len, num.size());
         
         T* left = new T[len];
         T* right = &num[right_begin];
@@ -44,14 +44,13 @@ namespace sort_algorithm{
 
     template<typename T>
     void merge_sort(std::vector<T>& num){
-        size_t i{0}, j;
+        size_t i={0}, j;
         
-        for (size_t t = 1; t < num.size(); t*=2)
+        for (size_t t = 1; t < num.size(); t<<=1)
         {
             j = i + t;
             while (i < num.size())
             {
-                // std::cout << i << ' ' << j << ' ' << t << std::endl;
                 if (j >= num.size())
                 {
                     break;
