@@ -3,8 +3,7 @@
 
 namespace sort_algorithm{
     template<typename T>
-    void bubble_sort(std::vector<T>& num){
-        size_t n = num.size();
+    void bubble_sort(std::vector<T>& num, size_t n){
         for (bool sorted = false; sorted = !sorted; n--)
         {
             for (size_t i = 1; i < n; i++)

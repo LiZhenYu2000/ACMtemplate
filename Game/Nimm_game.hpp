@@ -1,13 +1,14 @@
 #include <iostream>
 
 namespace game{
-    bool Nimm(int n){
+    bool Nimm(size_t n){
         // 有n堆东西， 两人轮流取， 每次取堆中不少于一个， 最后取完者胜
-        int arr[10000];
-        int res = 0;
+        unsigned long long arr;
+        unsigned long long res = 0;
         for (size_t i = 1; i <= n; i++)
         {
-            res ^= arr[i];
+            cin >> arr;
+            res ^= arr;
         }
         if (res)
         {

@@ -1,8 +1,7 @@
 #include <vector>
 namespace sort_algorithm{
     template<typename T>
-    void insertion_sort(std::vector<T>& a) {
-        size_t n = a.size();
+    void insertion_sort(std::vector<T>& a, size_t n) {
         for (size_t i = 1; i < n; ++i) {
             T tmp = a[i];
             for (size_t j = i - 1; j < i && j >= 0; --j)

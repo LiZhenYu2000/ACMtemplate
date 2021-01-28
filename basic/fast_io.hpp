@@ -1,4 +1,3 @@
-#ifndef __my_cpp_io__ //自定义快速输入输出
 #include<cstdio>
 #include<cctype>
 #include<stack>
@@ -12,62 +11,51 @@ struct my_EOF {
     my_EOF(const char* const t):text{t}{}
 };
 */
-template<typename T>
-decltype(EOF) read(T& result) { // fast read
-    char ch;
-    bool f{true};
-    T w{1};
-    result = 0;
-    do
-    {
-        ch = getchar();
-        if (ch == EOF)
-        {
-            return EOF;
-        }
+namespace basic{
+    template<typename T>
+    decltype(EOF) read(T& result) { // fast read
+        char ch;
+        bool f{true};
+        T w{1};
+        result = 0;
+        do{
+            ch = getchar();
+            if (ch == EOF)  return EOF;
 
-        if (!isdigit(ch) && f)
-        {
-            if (ch == '-')
+            if (!isdigit(ch) && f)
             {
-                w = -1;
+                if (ch == '-')
+                {
+                    w = -1;
+                }
+                continue;
             }
-            continue;
-        }
-        else if (isdigit(ch))
-        {
-            result = result * 10 + (ch - '0');
-            f = false;
-        }
-        else
-        {
-            break;
-        }
-        
-    } while (1);
-    
-    result *= w;
-    return 1;
-}
-
-template<typename T>
-void write (T x) { // fast output
-    bool positive = {(x >= 0)};
-    std::stack<int> sta;
-    do
-    {
-        sta.push(x % 10) , x /= 10;
-    } while (x);
-    
-    if (!positive)
-    {
-        putchar('-');
+            else if (isdigit(ch))
+            {
+                result = result * 10 + (ch - '0');
+                f = false;
+            }
+            else
+                break;
+        } while (1);
+        result *= w;
+        return 1;
     }
-    
-    while (!sta.empty())
-    {
-        putchar(sta.top() + '0');
-        sta.pop();
+    template<typename T>
+    void write (T x) { // fast output
+        bool positive = {(x >= 0)};
+        static std::stack<int> sta;
+        do{
+            sta.push(x % 10) , x /= 10;
+        } while (x);
+        if (!positive)
+        {
+            putchar('-');
+        }
+        while (!sta.empty())
+        {
+            putchar(sta.top() + '0');
+            sta.pop();
+        }
     }
 }
-#endif

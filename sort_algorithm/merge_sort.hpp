@@ -6,11 +6,6 @@
 
 namespace sort_algorithm{
     template<typename T>
-    inline T min(T a, T b){
-        return (a <= b) ? a : b;
-    }
-
-    template<typename T>
     void merge(std::vector<T>& num, size_t left_begin, size_t right_begin, size_t len){
         size_t left_end = left_begin + len, 
                right_end = std::min(right_begin + len, num.size());

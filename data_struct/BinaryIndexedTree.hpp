@@ -2,8 +2,7 @@
 #include<iostream>
 
 namespace data_struct{
-    constexpr size_t MAX_NUM = 1e6;
-
+    
     template<typename T>
     class BI_tree{
         std::vector<T> suf;
@@ -37,12 +36,12 @@ namespace data_struct{
             
         }
         BI_tree(const std::vector<T>& num)
-        :a_size{num.size()},suf(MAX_NUM){
+        :a_size{num.size()},suf(1e8){
             for(size_t i = 1;i < num.size();i++){
                 add(i, num[i]);
             }
         }
-        BI_tree():suf(MAX_NUM){}
+        BI_tree():suf(1e8){}
 
         BI_tree(std::vector<T>&& num)
         :BI_tree(num){}

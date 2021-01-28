@@ -1,21 +1,19 @@
-#include<cstdio>
-#include<cstring>
+#include <bits/stdc++.h>
+
 namespace math {
-    constexpr size_t MAX_NUM = 1e6;
-    //线性筛法求质数
+    constexpr size_t MAX_NUM = 1e8;
     int prime[MAX_NUM];
     bool Isprime[MAX_NUM];
     int get_primes(size_t n){
-        int cnt=1;
-        // prime[0]=2;
+        int cnt=0;
         Isprime[0]=Isprime[1]=1;
         for (size_t i = 2; i <= n; i++)
         {
             if (!Isprime[i])
             {
-                prime[cnt++] = i;
+                prime[++cnt] = i;
             }
-            for (size_t j = 1; prime[j] <= n / i; j++)
+            for (size_t j = 1; j <= cnt &&  prime[j] * i <= n ; j++)
             {
                 Isprime[prime[j] * i] = true;
                 if (i % prime[j] == 0)
