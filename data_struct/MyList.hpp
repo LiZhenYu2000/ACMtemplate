@@ -4,6 +4,6 @@
 
 namespace data_structure{
     class list{
-
+        
     };
 }

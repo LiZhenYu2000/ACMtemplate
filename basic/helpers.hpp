@@ -21,7 +21,7 @@ using namespace std;
 #define aFOR(a, s) for(auto & (a) : (s))
 #define pFOR(i, j, l, r, sit) for(int i = l,j = r; sit ;i++, j--)
 #define DEBUG(x) cout << #x << " = " << (x) << endl
-#define checktime() cerr << "Time : " << 1000 * ((double)clock()) / (double)CLOCKS_PER_SEC << "ms\n"
+#define checktime() cerr << "Time : " << 1000 * ((double)clock()) / (double)CLOCKS_PER_SEC << "ms\n" ; system("pause")
 #define endl '\n'
 #define faster_cpp_io() std::ios::sync_with_stdio(false),std::cin.tie(0),std::cout.tie(0)
 #define setp(n) fixed<<setprecision(n)
