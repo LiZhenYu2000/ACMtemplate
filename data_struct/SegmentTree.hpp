@@ -24,9 +24,6 @@ namespace data_struct{
         inline void merge_sub(size_t p){
             tree[p] = (tree[ls(p)] + tree[rs(p)]) % mod;
         }
-        // void up_min(size_t p){
-        //     tree[p] = min(tree[ls(p)], tree[rs(p)]);
-        // }
         inline void mark(size_t p, size_t l, size_t r, T delt_a, T delt_m){
             tag_mult[p] = (tag_mult[p] * delt_m) % mod;
             tag_add[p] = (tag_add[p] * delt_m + delt_a) % mod;

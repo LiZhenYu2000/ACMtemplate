@@ -1,21 +1,15 @@
-#include <iostream>
+#include <vector>
 
 namespace game{
-    bool Nimm(size_t n){
-        unsigned long long arr;
-        unsigned long long res = 0;
-        for (size_t i = 1; i <= n; i++)
+    template<typename T>
+    bool Nimm(const std::vector<T>& num, size_t left, size_t right){
+        T arr;
+        T res = 0;
+        for (size_t i = left; i <= right; i++)
         {
-            cin >> arr;
+            arr += num[i];
             res ^= arr;
         }
-        if (res)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return (res) ? true : false;
     }
 }

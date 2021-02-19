@@ -279,7 +279,7 @@ namespace data_structure{
         //可行的方法：首先通过插值查找或者折半查找缩小查找范围然后再使用二分查找
         while (lo < hi)
         {
-            int mi = lo + (hi - lo) * ((1.0 * e - elem[lo]) / (elem[hi] - elem[lo]));
+            size_t mi = lo + (hi - lo) * ((1.0 * e - elem[lo]) / (elem[hi] - elem[lo]));
             (e < elem[mi]) ? hi = mi : lo = mi + 1;
         }
         return --lo;

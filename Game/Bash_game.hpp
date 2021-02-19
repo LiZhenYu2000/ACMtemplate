@@ -1,9 +1,6 @@
 namespace game{
-    bool Bash(int n, int m){
-        if (n % (m + 1))
-        {
-            return true;
-        }
-        return false;
+    template<typename T>
+    bool Bash(T n, T m){
+        return (n % (m + 1)) ? true : false;
     }
 }
