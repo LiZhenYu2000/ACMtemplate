@@ -1,36 +1,44 @@
 #include <vector>
+using std::vector;
 
 namespace graph_theory{
-    constexpr long long MAX_N = 1e6;
 
-    class graph
+    class Graph
     {
+        static constexpr long long MAX_N = 1e6;
         vector<long long> head;
         vector<long long> nxt;
         vector<long long> to;
+        vector<long long> val;
         long long cnt;
     public:
-        void add(long long u, long long v){
-            nxt[++cnt] = head[u];
+        void add(long long u, long long v, long long w = 1){
+            nxt[cnt] = head[u];
             head[u] = cnt;
             to[cnt] = v;
+            val[cnt++] = w;
         }
-        void find_edge(long long u, long long v){
-            for(long long i = head[u]; ~i; i = nxt[i]) {
+        long long find_edge(long long u, long long v){
+            long long i;
+            for(i = head[u]; ~i; i = nxt[i]) {
                 if(to[i] == v) {
-                    return true;
+                    return i;
                 }
             }
-            return false;
+            return i;
         }
-        void operator[](long long u){
+        long long operator[](long long u){
             return head[u];
         }
-        void next_edge(long long u){
+        long long val_edge(long long idx){
+            return val[idx];
+        }
+        long long next_edge(long long u){
             return nxt[u];
         }
-        graph(size_t n):head(n+1, -1),nxt(n+1, -1), to(n+1, -1), cnt{-1}{}
-        graph():head(MAX_N, -1),nxt(MAX_N, -1), to(MAX_N, -1), cnt{-1}{}
-        ~graph(){}
+        Graph(size_t n):head(n+1, -1),nxt(2*n+2, -1), to(2*n+2, -1), val(2*n+2, 0){}
+        Graph(size_t n, size_t m):head(n+1, -1),nxt(2*m+2, -1), to(2*m+2, -1), val(2*m+2, 0){}
+        Graph():head(MAX_N, -1),nxt(MAX_N, -1), to(MAX_N, -1), val(MAX_N, 0){}
+        ~Graph(){}
     };
 }

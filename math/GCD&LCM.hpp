@@ -1,12 +1,14 @@
 #include <iostream>
 
 namespace math{
-    int gcd(int a, int b){
+    using ll = long long;
+
+    ll gcd(ll a, ll b){
         return b ? gcd(b, a % b) : a;
     }
 
-    int lcm(int a, int b){
-        int g = gcd(a, b);
+    ll lcm(ll a, ll b){
+        ll g = gcd(a, b);
         return a * b / g;
     }
 }
