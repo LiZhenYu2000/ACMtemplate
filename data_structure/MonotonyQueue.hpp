@@ -2,9 +2,11 @@
 #include<vector>
 #include<algorithm>
 #include<utility>
-
+#define ss second
+#define ff first
+#define mp make_pair
 namespace data_structure{
-    using std::vector;
+    using ll = long long;
     using std::deque;
     using std::pair;
     using std::make_pair;
@@ -12,70 +14,55 @@ namespace data_structure{
     class MonotonyQueue
     {
     private:
-        size_t window{1};
-        vector<T> mx;
-        vector<T> mn;
+        size_t window{10};
+        size_t idx_max{0};
+        size_t idx_min{0};
         deque<pair<T, size_t>> ic, dc;
 
-        void test_front(size_t i){
-            while(!ic.empty() && ic.front().second < i ){
-                ic.pop_front();
-            }
-            mn.emplace_back(ic.front().first);
-            while(!dc.empty() && dc.front().second < i ){
+        void test_front_max(size_t i){
+            while(!dc.empty() && dc.front().ss < i)
                 dc.pop_front();
-            }
-            mx.emplace_back(dc.front().first);
+        }
+        
+        void test_front_min(size_t i){
+            while(!ic.empty() && ic.front().ss < i)
+                ic.pop_front();
         }
 
-        void insert_back(const T& num, size_t i){
-            while(!ic.empty() && ic.back().first > num){
-                ic.pop_back();
-            }
-            ic.emplace_back(make_pair(num,i));
-            while(!dc.empty() && dc.back().first < num){
+        void insert_back_max(const T& num, size_t i){
+            while(!dc.empty() && dc.back().ff < num)
                 dc.pop_back();
-            }
-            dc.emplace_back(make_pair(num,i));
+            dc.push_back(mp(num, i));
+        }
+        
+        void insert_back_min(const T& num, size_t i){
+            while(!ic.empty() && ic.back().ff > num)
+                ic.pop_back();
+            ic.push_back(mp(num, i));
         }
     public:
-        void build(vector<T>& num, size_t n){
-            size_t win = std::min(n, window);
-            if(win == 0)
-                return ;
-            else{
-                for(size_t i = 0 ; i < win ; i ++){
-                    insert_back(num[i], i);
-                }
-                test_front(0);
-                for(size_t i = win ; i < n ; i ++ ){
-                    insert_back(num[i], i);
-                    test_front(i - win + 1);
-                }
-                test_front(n - win + 1);
-                ic.clear(), dc.clear();
-            }
+        void insert_mx(ll num){
+            insert_back_max(num, ++idx_max);
         }
-        void build(const T* num, size_t n){
-            build(vector<T>(num, num + n), n);
+        void insert_mn(ll num){
+            insert_back_min(num, ++idx_min);
         }
-        void build(vector<T>&& num, size_t n){
-            build(num, n);
+        void insert(ll num){
+            insert_mx(num);
+            insert_mn(num);
         }
-        size_t step(){
-            return mn.size() - 1;
+        pair<T, size_t> winMin(){
+            if(idx_min > window)
+                test_front_min(idx_min - window + 1);
+            return ic.front();
         }
-        T stepMin(size_t n){
-            if(n < 1 || n > mn.size() - 1)
-                return T{0};
-            return mn[n - 1];
-        }
-        T stepMax(size_t n){
-            if(n < 1 || n > mx.size() - 1)
-                return T{0};
-            return mx[n - 1];
+        pair<T, size_t> winMax(){
+            if(idx_max > window)
+                test_front_max(idx_max - window + 1);
+            return dc.front();
         }
         MonotonyQueue(size_t win):window{win}{}
+        MonotonyQueue(){}
         ~MonotonyQueue(){}
     };
 }
