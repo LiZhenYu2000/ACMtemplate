@@ -44,9 +44,8 @@ namespace data_structure{
                 else if(r <= _size)
                     big = r;
 
-                if(tmp <= heap[big]){
+                if(tmp <= heap[big])
                     break;
-                }
                 
                 heap[pos] = heap[big];
                 pos = big;
@@ -62,9 +61,7 @@ namespace data_structure{
         void copy_from(vector<T>& num, size_t n){
             heap.resize(n + 1);_size = n;
             for (size_t i = 0; i < n; i++)
-            {
                 heap[i + 1] = num[i];
-            }
         }
     public:
         void build_heap(vector<T>& num, size_t n){
@@ -87,10 +84,9 @@ namespace data_structure{
             percolate_down(root);
         }
         void insert(T& num){
-            if(_size < heap.size() - 1){
-                heap[++_size] = num;
+            if(_size < heap.size() - 1)
+                heap[++_size] = num,
                 percolate_up(_size);
-            }
             else{
                 heap.emplace_back(T{num});++_size;
                 percolate_up(_size);

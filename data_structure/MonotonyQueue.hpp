@@ -41,6 +41,12 @@ namespace data_structure{
             ic.push_back(mp(num, i));
         }
     public:
+        bool empty_mn(){
+            return idx_min == 0;
+        }
+        bool empty_mx(){
+            return idx_max == 0;
+        }
         void insert_mx(ll num){
             insert_back_max(num, ++idx_max);
         }

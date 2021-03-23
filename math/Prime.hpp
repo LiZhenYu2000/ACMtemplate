@@ -9,7 +9,7 @@ namespace math {
     private:
         static constexpr size_t MAX_NUM = 1e7;
         vector<ll> prime;
-        vector<short> Isprime;
+        vector<bool> Isprime;
         size_t cnt{0};
     public:
         void get_primes(size_t n){
@@ -46,8 +46,12 @@ namespace math {
             if(pos >= cnt) return 0;
             return prime[pos];
         }
-        Prime():Isprime(MAX_NUM, false){}
-        Prime(size_t n):Isprime(n, false){}
+        Prime():Isprime(MAX_NUM, false){
+            get_primes(MAX_NUM);
+        }
+        Prime(size_t n):Isprime(n, false){
+            get_primes(n);
+        }
         ~Prime(){}
     };
 }

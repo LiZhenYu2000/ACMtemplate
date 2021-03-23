@@ -4,6 +4,7 @@
 namespace data_structure{
     template<typename T>
     class BI_tree{
+        static size_t MAX_NUM = 1e6;
         std::vector<T> suf;
         size_t a_size{0};
     protected:
@@ -14,33 +15,27 @@ namespace data_structure{
         T query(size_t x){
             T res = 0;
             while (x)
-            {
-                res += suf[x];
+                res += suf[x],
                 x -= lowbit(x);
-            }
             return res;
         }
         void add(size_t x, T v){
             while (x <= a_size)
-            {
-                suf[x] += v;
+                suf[x] += v,
                 x += lowbit(x);
-            }
         }
         void output(){
             for (size_t i = 1; i <= a_size; i++)
-            {
                 std::cout << suf[i] << std::endl;
-            }
-            
         }
+        
         BI_tree(const std::vector<T>& num)
-        :a_size{num.size()},suf(1e8){
-            for(size_t i = 1;i < num.size();i++){
+        :a_size{num.size()},suf(MAX_NUM){
+            for(size_t i = 1;i < num.size();i++)
                 add(i, num[i]);
-            }
         }
-        BI_tree():suf(1e8){}
+
+        BI_tree():suf(MAX_NUM){}
 
         BI_tree(std::vector<T>&& num)
         :BI_tree(num){}
