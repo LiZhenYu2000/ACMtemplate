@@ -57,6 +57,11 @@ namespace data_structure{
             insert_mx(num);
             insert_mn(num);
         }
+        void clear(){
+            idx_max = 0, 
+            idx_min = 0;
+            ic.clear(), dc.clear();
+        }
         pair<T, size_t> winMin(){
             if(idx_min > window)
                 test_front_min(idx_min - window + 1);
